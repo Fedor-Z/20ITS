@@ -3,22 +3,149 @@
 
 #include <stdio.h>
 
-int dvo(int a)
+int dvo(unsigned char x)
 {
-	int bin = 0, j = 1;
-	while (a)
+	
+	int i;
+	unsigned char bin;
+	for (i = 7; i >= 0; i--)
 	{
-		bin += (a % 2) * j;
-		j *= 10;
-		a /= 2;
+		bin = (x >> i) & 1;
+		printf("%d", bin);
+
 	}
-	return bin;
+	
+	printf("\n");
+	return 0;
+}
+
+int dec(unsigned char a)
+{
+	int x;
+	x = a >> 6 & 3;
+	printf("Layer:\n");
+	switch (x)
+	{
+	case 0:
+		printf("  Layer 1\n");
+		break;
+	case 1:
+		printf("  Layer 2\n");
+		break;
+	case 2:
+		printf("  Layer 3\n");
+		break;
+	case 3:
+		printf("  Reserved\n");
+		break;
+	default:
+		break;
+	}
+
+	x = a >> 5 & 1;
+	printf("Type:\n");
+	switch (x)
+	{
+	case 0:
+		printf("  Constant Bitrate (CBR)\n");
+				printf("Mode:\n");
+				x = a >> 4 & 1;
+				switch (x)
+				{
+				case 0:
+					printf("  Mono\n");
+					break;
+				case 1:
+					printf("  Stereo\n");
+					break;
+				default:
+					break;
+				}
+				printf("Bitrate:\n");
+				x = a >> 1 & 7;
+				switch (x)
+				{
+				case 0:
+					printf("  32kpbs\n");
+					break;
+				case 1:
+					printf("  48kpbs\n");
+					break;
+				case 2:
+					printf("  64kpbs\n");
+					break;
+				case 3:
+					printf("  96kpbs\n");
+					break;
+				case 4:
+					printf("  128kpbs\n");
+					break;
+				case 5:
+					printf("  192kpbs\n");
+					break;
+				case 6:
+					printf("  256kpbs\n");
+					break;
+				case 7:
+					printf("  320kpbs\n");
+					break;
+
+
+				default:
+					break;
+				}
+		break;
+	case 1:
+		printf("  Variable Bitrate (VBR)\n");
+				printf("Range:\n");
+				x = a >> 3 & 3;
+				switch (x)
+				{
+				case 0:
+					printf("  32-48kbps\n");
+					break;
+				case 1:
+					printf("  64-96kbps\n");
+					break;
+				case 2:
+					printf("  128-192kbps\n");
+					break;
+				case 3:
+					printf("  256-320kbps\n");
+					break;
+				default:
+					break;
+				}
+				printf("Mode:\n");
+				x = a >> 1 & 3;
+				switch (x)
+				{
+				case 0:
+					printf("  Stereo\n");
+					break;
+				case 1:
+					printf("  Joint stereo\n");
+					break;
+				case 2:
+					printf("  Dual channel\n");
+					break;
+				case 3:
+					printf("  Single channel\n");
+					break;
+				default:
+					break;
+				}
+		break;
+	default:
+		break;
+	}
+	return 0;
 }
 
 int main()
 {
-	int a, b;
-	scanf_s("%d", &a);
-	b = dvo(a);
-	printf("%d", b);
+	unsigned char a;
+	scanf_s("%hhu", &a);
+	dvo(a);
+	dec(a);
 }
