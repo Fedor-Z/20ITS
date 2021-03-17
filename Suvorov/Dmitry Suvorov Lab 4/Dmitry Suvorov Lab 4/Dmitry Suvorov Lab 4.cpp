@@ -1,9 +1,7 @@
-﻿// Dmitry Suvorov Lab 4.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
-
-#include <iostream>
+﻿#include <iostream>
 #include <stdio.h>  
 #include <math.h>  
+
 
 void dvoichsyst(int dec)
 {
@@ -24,6 +22,7 @@ void dvoichsyst(int dec)
 	}
 	printf("\n");
 }
+
 
 void vivod(int dec)
 {
@@ -188,6 +187,60 @@ void vivod(int dec)
 	}
 }
 
+void cs(int dec)
+{
+	int i;
+	i = dec >> 0 & 1;
+	switch (i)
+	{
+	case 0:
+	{
+		printf("\n\nCS: 0");
+		break;
+	}
+	case 1:
+	{
+		printf("\n\nCS: 1");
+		break;
+	}
+	}
+
+	int input = dec;
+	int func = 0;
+	input = input << 1 & 1;
+	int bit = input;
+	if (bit == 0)
+	{
+		for (int j = 1; j <= 4; j = j + 1)
+		{
+			func = dec >> j;
+			func = func & 1;
+			input = input ^ func;
+		}
+	}
+
+	if (bit == 1)
+	{
+		for (int j = 1; j <= 4; j = j + 1)
+		{
+			func = dec >> j;
+			func = func & 1;
+			input = input ^ func;
+		}
+	}
+
+	printf("\nFinal Control Sum with XOR method issue: %d", input);
+
+	if (input == 1)
+	{
+		printf("\nXOR: No corrupted bits found.");
+	}
+	else
+	{
+		printf("\nXOR: Bug. The integrity of the information is violated.");
+	}
+}
+
 int main()
 {
 	unsigned char dec;
@@ -196,5 +249,6 @@ int main()
 	int n = dec;
 	dvoichsyst(n);
 	vivod(n);
+	cs(n);
 	printf("\n\n\n");
 }
