@@ -214,8 +214,7 @@ void cs(int dec)
 		for (int j = 1; j <= 4; j = j + 1)
 		{
 			func = dec >> j;
-			func = func & 1;
-			input = input ^ func;
+			input = input ^ (func & 1);
 		}
 	}
 
@@ -224,8 +223,7 @@ void cs(int dec)
 		for (int j = 1; j <= 4; j = j + 1)
 		{
 			func = dec >> j;
-			func = func & 1;
-			input = input ^ func;
+			input = input ^ (func & 1);
 		}
 	}
 
