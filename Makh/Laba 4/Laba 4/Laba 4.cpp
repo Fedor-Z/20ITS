@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-int dvo(unsigned char x)
+int dvo(unsigned char x)//Представление в битах
 {
 	
 	int i;
@@ -21,9 +21,21 @@ int dvo(unsigned char x)
 
 int dec(unsigned char a)
 {
-	int x;
+	int x, x1;
+	x1 = a >> 4 & 1 + a >> 3 & 1 + a >> 2 & 1 + a >> 1 & 1;
+	x1 = x1 >> 0 & 1;
+	x = a >> 0 & 1;
+	printf("Data accuracy:\n");
+	if(x1==x)//Контрольная сумма
+	{
+		printf("  True\n");
+	}
+	else
+	{
+		printf("  False\n");
+	}
 	x = a >> 6 & 3;
-	printf("Layer:\n");
+	printf("Layer:\n");//Дешифровка
 	switch (x)
 	{
 	case 0:
