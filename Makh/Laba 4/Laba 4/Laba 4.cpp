@@ -21,12 +21,14 @@ int dvo(unsigned char x)//Представление в битах
 
 int dec(unsigned char a)
 {
-	int x, x1;
-	x1 = a >> 4 & 1 + a >> 3 & 1 + a >> 2 & 1 + a >> 1 & 1;
-	x1 = x1 >> 0 & 1;
+	int x, x1=0;
+	for (int i=4;i>=1;i--) //Контрольная сумма
+	{
+		x1 = x1 ^ a >> i & 1;
+	}
 	x = a >> 0 & 1;
 	printf("Data accuracy:\n");
-	if(x1==x)//Контрольная сумма
+	if(x1==x)
 	{
 		printf("  True\n");
 	}
