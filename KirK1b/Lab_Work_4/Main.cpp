@@ -24,7 +24,7 @@ int main() {
 	transl = input >> 6;
 	transl = transl & 3;
 	switch (transl) {
-	case 0:{
+	case 0: {
 		printf("\nLayer: Layer I\n");
 		break;
 	}
@@ -42,17 +42,16 @@ int main() {
 	}
 	default: break;
 	}
-	transl = input; 
+	transl = input;
 	//type
-	transl = transl << 2; 
-	transl = transl >> 7;
-	transl = transl & 1; 
+	transl = transl >> 5;
+	transl = transl & 1;
 	iter = transl; //type for CS
 	if (transl == 1) {
-		transl = binary;
+		transl = input; //binary to input
 		printf("Type - VBR\n");
-		transl = transl << 3; //bitrate info
-		transl = transl >> 4;
+		//bitrate info
+		transl = transl >> 1;
 		transl = transl & 15;
 		//range
 		transl = transl >> 2;
@@ -62,8 +61,7 @@ int main() {
 		if (transl == 3) printf("Range: 256-320  kbps\n");
 		//mode
 		transl = binary;
-		transl = transl << 5;
-		transl = transl >> 6;
+		transl = transl >> 1;
 		transl = transl & 0x3;
 		if (transl == 0) printf("Mode: stereo\n");
 		if (transl == 1) printf("Mode: joint stereo\n");
@@ -74,45 +72,29 @@ int main() {
 		printf("Type - CBR\n");
 		//mode
 		transl = binary;
-		transl = transl << 3;
-		transl = transl >> 7;
+		transl = transl >> 4;
 		transl = transl & 1;
 		if (transl == 0) printf("Mode: mono\n");
 		if (transl == 1) printf("Mode: stereo\n");
 		//Bitrate info
 		transl = binary;
-		transl = transl << 4;
-		transl = transl >> 5;
+		transl = transl >> 1; 
 		transl = transl & 0x7;
 		for (int e = 0; e < 8; e++) {
 			if (transl == e) {
 				if (e < 3) transl = 32 + e * 16;
 				else if (e >= 3 && e < 5) transl = e * 32;
-				else transl = 64 * e - 32 * (e - (trunc(e / 2) - 1)); 
+				else transl = 64 * e - 32 * (e - (trunc(e / 2) - 1));
 				printf("Bitrate - %d kbps\n", transl);
 				break;
 			}
 		}
 	}
 	//CS
-	count = binary;
-	if (iter == 0) { //type - CBR
-		count = (count >> 4) & 1; 
-		for (int i = 3; i > 0; i--) {
-			transl = binary >> i;
-			transl = transl & 1;
-			count = count ^ transl;
-		}
+	count = (input >> 4) & 1;
+	for (int i = 4; i > 0; i--) {
+		count = count ^ ((input >> i) & 1);
 	}
-	else { //type - VBR
-		count = (count >> 4) & 1;
-		for (int i = 3; i > 0; i--) {
-			transl = binary >> i;
-			transl = transl & 1;
-			count = count ^ transl;
-		}
-	}
-	if (count == 1) printf("CS: OK\nInformation trusferred succefully!");
+	if (count == (input & 1)) printf("CS: OK\nInformation trunsferred succefully!");
 	else printf("CS: ERROR\nResend data!");
-	}
-	 
+}
