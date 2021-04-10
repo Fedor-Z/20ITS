@@ -189,47 +189,28 @@ void vivod(int dec)
 
 void cs(int dec)
 {
-	int i;
+	int i, k=0;
 	i = dec >> 0 & 1;
-	switch (i)
+	if (k = i)
 	{
-	case 0:
-	{
-		printf("\n\nCS: 0");
-		break;
+		printf("\n\nCS: %d", i);
 	}
-	case 1:
+	else
 	{
-		printf("\n\nCS: 1");
-		break;
-	}
+		printf("\n\nCS: %d", i);
 	}
 
-	int input = dec;
+
 	int func = 0;
-	input = input << 1 & 1;
-	int bit = input;
-	if (bit == 0)
+	i = dec << 0 & 1;
+	for (int j = 4; j >= 0; j--)
 	{
-		for (int j = 1; j <= 4; j = j + 1)
-		{
-			func = dec >> j;
-			input = input ^ (func & 1);
-		}
+		func = func ^ dec >> j & 1;
 	}
 
-	if (bit == 1)
-	{
-		for (int j = 1; j <= 4; j = j + 1)
-		{
-			func = dec >> j;
-			input = input ^ (func & 1);
-		}
-	}
+	printf("\nFinal Control Sum with XOR method issue: %d", func);
 
-	printf("\nFinal Control Sum with XOR method issue: %d", input);
-
-	if (input == 1)
+	if (func == (i & 1))
 	{
 		printf("\nXOR: No corrupted bits found.");
 	}
