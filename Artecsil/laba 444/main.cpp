@@ -1,10 +1,5 @@
 #include "my.h"
-int tretiybit(unsigned char x)
-{
-	int y;
-	y = (x & 1);
-	return y;
-}
+
 int dvoichncod(unsigned char x)
 {
 	unsigned char a[8];
